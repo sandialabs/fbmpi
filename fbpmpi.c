@@ -135,6 +135,7 @@ MPI_Datatype fbmpi_2int;
 MPI_Datatype fbmpi_long_int;
 MPI_Datatype fbmpi_float_int;
 MPI_Datatype fbmpi_double_int;
+MPI_Datatype fbmpi_count;
 
 MPI_Op MPI_SUM;
 MPI_Op MPI_MIN;
@@ -268,6 +269,8 @@ int PMPI_Init_thread(
   fbmpi_float_int->size = sizeof(float_int_t);
   fbmpi_double_int = (MPI_Datatype)malloc(sizeof(struct fbmpi_datatype));
   fbmpi_double_int->size = sizeof(double_int_t);
+  fbmpi_count = (MPI_Datatype)malloc(sizeof(struct fbmpi_datatype));
+  fbmpi_count->size = sizeof(MPI_Count);
   fbmpi_is_initialized = 1;
   return MPI_SUCCESS;
 }
@@ -306,6 +309,7 @@ int PMPI_Finalize(void)
   MPI_Type_free(&fbmpi_long_int);
   MPI_Type_free(&fbmpi_float_int);
   MPI_Type_free(&fbmpi_double_int);
+  MPI_Type_free(&fbmpi_count);
   fbmpi_destroy_comm(MPI_COMM_WORLD);
   fbmpi_destroy_comm(MPI_COMM_SELF);
   fbmpi_is_finalized = 1;

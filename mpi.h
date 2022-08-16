@@ -215,6 +215,7 @@ extern MPI_Datatype fbmpi_2int;
 extern MPI_Datatype fbmpi_long_int;
 extern MPI_Datatype fbmpi_float_int;
 extern MPI_Datatype fbmpi_double_int;
+extern MPI_Datatype fbmpi_count;
 
 /* there are codes that assume these to be macros */
 #define MPI_BYTE fbmpi_byte
@@ -250,6 +251,7 @@ extern MPI_Datatype fbmpi_double_int;
 #define MPI_LONG_INT fbmpi_long_int
 #define MPI_FLOAT_INT fbmpi_float_int
 #define MPI_DOUBLE_INT fbmpi_double_int
+#define MPI_COUNT fbmpi_count
 
 struct fbmpi_status {
   int MPI_SOURCE;
