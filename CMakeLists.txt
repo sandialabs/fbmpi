@@ -2,14 +2,7 @@ cmake_minimum_required(VERSION 3.15.0...3.21.0)
 
 project(fbmpi VERSION 1.0.0 LANGUAGES C)
 
-option(fbmpi_ENABLE_CUDA "Enable CUDA support" OFF)
-
 set(FBMPI_SOURCES fbpmpi.c fbmpi.c)
-
-if (fbmpi_ENABLE_CUDA)
-  enable_language(CUDA)
-  set_source_files_properties(${FBMPI_SOURCES} PROPERTIES LANGUAGE CUDA)
-endif()
 
 include(GNUInstallDirs)
 include(CMakePackageConfigHelpers)

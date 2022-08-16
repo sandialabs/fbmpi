@@ -13,24 +13,11 @@
 #include <time.h>
 #endif
 
-#ifdef __CUDACC__
-
-int fbmpi_memcpy(void* dest, const void* src, size_t count)
-{
-  cudaError_t cuda_error = cudaMemcpy(dest, src, count, cudaMemcpyDefault);
-  if (cuda_error != cudaSuccess) return MPI_ERR_INTERN;
-  return MPI_SUCCESS;
-}
-
-#else
-
 int fbmpi_memcpy(void* dest, const void* src, size_t count)
 {
   memcpy(dest, src, count);
   return MPI_SUCCESS;
 }
-
-#endif
 
 enum fbmpi_request_type {
   FBMPI_SEND,
