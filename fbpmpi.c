@@ -830,6 +830,16 @@ int PMPI_Cart_coords(
   return MPI_SUCCESS;
 }
 
+int PMPI_Info_set(
+    MPI_Info info,
+    const char* key,
+    const char* value)
+{
+  fprintf(stderr, "PMPI_Info_set not implemented\n");
+  abort();
+  return MPI_SUCCESS;
+}
+
 int PMPI_Info_get(
     MPI_Info info,
     const char* key,
@@ -852,6 +862,17 @@ int PMPI_Info_get_nkeys(MPI_Info info, int* nkeys)
 int PMPI_Info_get_nthkey(MPI_Info info, int n, char* key)
 {
   fprintf(stderr, "PMPI_Info_get_nthkey not implemented\n");
+  abort();
+  return MPI_SUCCESS;
+}
+
+int PMPI_Info_get_valuelen(
+    MPI_Info info,
+    const char* key,
+    int* valuelen,
+    int* flag)
+{
+  fprintf(stderr, "PMPI_Info_get_valuelen not implemented\n");
   abort();
   return MPI_SUCCESS;
 }

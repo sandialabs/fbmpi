@@ -264,6 +264,17 @@ int MPI_Cart_coords(
   return PMPI_Cart_coords(comm, rank, maxdims, coords);
 }
 
+int MPI_Info_set(
+    MPI_Info info,
+    const char* key,
+    const char* value)
+{
+  return PMPI_Info_set(
+      info,
+      key,
+      value);
+}
+
 int MPI_Info_get(
     MPI_Info info,
     const char* key,
@@ -287,6 +298,15 @@ int MPI_Info_get_nkeys(MPI_Info info, int* nkeys)
 int MPI_Info_get_nthkey(MPI_Info info, int n, char* key)
 {
   return PMPI_Info_get_nthkey(info, n, key);
+}
+
+int MPI_Info_get_valuelen(
+    MPI_Info info,
+    const char* key,
+    int* valuelen,
+    int* flag)
+{
+  return PMPI_Info_get_valuelen(info, key, valuelen, flag);
 }
 
 int MPI_Info_dup(MPI_Info info, MPI_Info* newinfo)
