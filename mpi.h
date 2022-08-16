@@ -1513,6 +1513,8 @@ int PMPI_File_write_at(
     MPI_Status* status);
 int MPI_File_sync(MPI_File fh);
 int PMPI_File_sync(MPI_File fh);
+int MPI_File_get_info(MPI_File fh, MPI_Info* info_used);
+int PMPI_File_get_info(MPI_File fh, MPI_Info* info_used);
 
 MPI_Aint MPI_Aint_diff(MPI_Aint addr1, MPI_Aint addr2);
 MPI_Aint PMPI_Aint_diff(MPI_Aint addr1, MPI_Aint addr2);

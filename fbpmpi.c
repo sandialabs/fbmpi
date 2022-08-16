@@ -2097,6 +2097,13 @@ int PMPI_File_sync(MPI_File fh)
   return MPI_SUCCESS;
 }
 
+int PMPI_File_get_info(MPI_File fh, MPI_Info* info_used)
+{
+  fprintf(stderr, "PMPI_File_get_info not implemented\n");
+  abort();
+  return MPI_SUCCESS;
+}
+
 MPI_Aint PMPI_Aint_diff(MPI_Aint addr1, MPI_Aint addr2)
 {
   fprintf(stderr, "PMPI_Aint_diff not implemented\n");

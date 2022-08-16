@@ -1475,6 +1475,11 @@ int MPI_File_sync(MPI_File fh)
   return PMPI_File_sync(fh);
 }
 
+int MPI_File_get_info(MPI_File fh, MPI_Info* info_used)
+{
+  return PMPI_File_get_info(fh, info_used);
+}
+
 MPI_Aint MPI_Aint_diff(MPI_Aint addr1, MPI_Aint addr2)
 {
   return PMPI_Aint_diff(addr1, addr2);
