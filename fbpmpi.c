@@ -894,9 +894,19 @@ int PMPI_Type_free(MPI_Datatype* datatype)
 int PMPI_Type_get_extent(
     MPI_Datatype datatype,
     MPI_Aint* lb,
-    MPI_Aint *extent)
+    MPI_Aint* extent)
 {
   fprintf(stderr, "PMPI_Type_get_extent not implemented\n");
+  abort();
+  return MPI_SUCCESS;
+}
+
+int PMPI_Type_get_extent_x(
+    MPI_Datatype datatype,
+    MPI_Count* lb,
+    MPI_Count* extent)
+{
+  fprintf(stderr, "PMPI_Type_get_extent_x not implemented\n");
   abort();
   return MPI_SUCCESS;
 }

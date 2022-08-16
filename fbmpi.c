@@ -317,9 +317,17 @@ int MPI_Type_free(MPI_Datatype* datatype)
 int MPI_Type_get_extent(
     MPI_Datatype datatype,
     MPI_Aint* lb,
-    MPI_Aint *extent)
+    MPI_Aint* extent)
 {
   return PMPI_Type_get_extent(datatype, lb, extent);
+}
+
+int MPI_Type_get_extent_x(
+    MPI_Datatype datatype,
+    MPI_Count* lb,
+    MPI_Count* extent)
+{
+  return PMPI_Type_get_extent_x(datatype, lb, extent);
 }
 
 int MPI_Type_contiguous(
