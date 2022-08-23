@@ -125,6 +125,7 @@ MPI_Datatype fbmpi_double_int;
 MPI_Datatype fbmpi_count;
 
 MPI_Op MPI_SUM;
+MPI_Op MPI_PROD;
 MPI_Op MPI_MIN;
 MPI_Op MPI_MAX;
 MPI_Op MPI_BOR;

@@ -277,6 +277,7 @@ typedef fbmpi_op_ptr MPI_Op;
 #define MPI_OP_NULL ((MPI_Op)NULL)
 
 extern MPI_Op MPI_SUM;
+extern MPI_Op MPI_PROD;
 extern MPI_Op MPI_MIN;
 extern MPI_Op MPI_MAX;
 extern MPI_Op MPI_BOR;
