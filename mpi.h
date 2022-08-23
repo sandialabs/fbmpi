@@ -1543,6 +1543,9 @@ int MPI_Get_address(const void* location, MPI_Aint* address);
 int PMPI_Get_address(const void* location, MPI_Aint* address);
 
 MPI_Comm MPI_Comm_f2c(MPI_Fint comm);
+MPI_Comm PMPI_Comm_f2c(MPI_Fint comm);
+MPI_Fint MPI_Comm_c2f(MPI_Comm comm);
+MPI_Fint PMPI_Comm_c2f(MPI_Comm comm);
 MPI_Info MPI_Info_f2c(MPI_Fint comm);
 
 int MPI_Pack_size(

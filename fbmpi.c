@@ -1510,11 +1510,14 @@ int MPI_Get_address(void const* location, MPI_Aint* address)
   return PMPI_Get_address(location, address);
 }
 
+MPI_Fint MPI_Comm_c2f(MPI_Comm comm)
+{
+  return PMPI_Comm_c2f(comm);
+}
+
 MPI_Comm MPI_Comm_f2c(MPI_Fint comm)
 {
-  fprintf(stderr, "MPI_Comm_f2c not implemented\n");
-  abort();
-  return MPI_COMM_NULL;
+  return PMPI_Comm_f2c(comm);
 }
 
 MPI_Info MPI_Info_f2c(MPI_Fint comm)

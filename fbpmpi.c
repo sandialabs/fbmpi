@@ -71,15 +71,24 @@ struct fbmpi_requests {
 };
 
 struct fbmpi_comm {
+  int id;
   struct fbmpi_attribute_values attribute_values;
   struct fbmpi_requests incomplete_requests;
   int cart_ndims;
   int* cart_periods;
 };
 
+struct fbmpi_comms_s {
+  MPI_Comm* array;
+  int size;
+};
+
+struct fbmpi_comms_s fbmpi_comms;
+
 struct fbmpi_comm fbmpi_comm_self;
 struct fbmpi_comm fbmpi_comm_world;
 
+int fbmpi_next_comm_id = 1;
 MPI_Comm MPI_COMM_SELF = &fbmpi_comm_self;
 MPI_Comm MPI_COMM_WORLD = &fbmpi_comm_world;
 
@@ -143,16 +152,37 @@ static struct fbmpi_comm_attribute_keys_s fbmpi_comm_attribute_keys;
 
 static void fbmpi_construct_comm(MPI_Comm comm)
 {
+  comm->id = fbmpi_next_comm_id;
+  ++fbmpi_next_comm_id;
   comm->attribute_values.array = NULL;
   comm->attribute_values.size = 0;
   comm->incomplete_requests.array = NULL;
   comm->incomplete_requests.size = 0;
   comm->cart_ndims = 0;
   comm->cart_periods = NULL;
+  int new_size = fbmpi_comms.size + 1;
+  MPI_Comm* new_array = (MPI_Comm*)malloc(sizeof(MPI_Comm) * new_size);
+  memcpy(new_array, fbmpi_comms.array, sizeof(MPI_Comm) * fbmpi_comms.size);
+  new_array[fbmpi_comms.size] = comm;
+  free(fbmpi_comms.array);
+  fbmpi_comms.array = new_array;
+  fbmpi_comms.size = new_size;
 }
 
 static void fbmpi_destroy_comm(MPI_Comm comm)
 {
+  int new_size = fbmpi_comms.size - 1;
+  MPI_Comm* new_array = (MPI_Comm*)malloc(sizeof(MPI_Comm) * new_size);
+  int new_i = 0;
+  for (int old_i = 0; old_i < fbmpi_comms.size; ++old_i) {
+    if (fbmpi_comms.array[old_i] != comm) {
+      new_array[new_i] = fbmpi_comms.array[old_i];
+      ++new_i;
+    }
+  }
+  free(fbmpi_comms.array);
+  fbmpi_comms.array = new_array;
+  fbmpi_comms.size = new_size;
   while (comm->attribute_values.size) {
     MPI_Comm_delete_attr(comm, comm->attribute_values.array[0].keyval);
   }
@@ -184,6 +214,8 @@ int PMPI_Init_thread(
   *provided = MPI_THREAD_SINGLE;
   (void)argc;
   (void)argv;
+  fbmpi_comms.array = NULL;
+  fbmpi_comms.size = 0;
   fbmpi_comm_attribute_keys.array = NULL;
   fbmpi_comm_attribute_keys.size = 0;
   fbmpi_construct_comm(MPI_COMM_WORLD);
@@ -659,6 +691,23 @@ int PMPI_Comm_group(MPI_Comm comm, MPI_Group* group)
   fprintf(stderr, "PMPI_Comm_group not implemented\n");
   abort();
   return MPI_SUCCESS;
+}
+
+MPI_Fint PMPI_Comm_c2f(MPI_Comm comm)
+{
+  return comm->id;
+}
+
+MPI_Comm PMPI_Comm_f2c(MPI_Fint comm)
+{
+  for (int i = 0; i < fbmpi_comms.size; ++i) {
+    if (fbmpi_comms.array[i]->id == comm) {
+      return fbmpi_comms.array[i];
+    }
+  }
+  fprintf(stderr, "MPI_Comm_f2c could not find ID %d\n", comm);
+  abort();
+  return MPI_COMM_NULL;
 }
 
 int PMPI_Group_incl(
