@@ -46,6 +46,11 @@ double MPI_Wtick(void)
   return PMPI_Wtick();
 }
 
+int MPI_Get_version(int *version, int *subversion)
+{
+  return PMPI_Get_version(version, subversion);
+}
+
 int MPI_Pcontrol(const int level, ...)
 {
   return MPI_SUCCESS;
@@ -972,6 +977,11 @@ int MPI_Testsome(
       outcount,
       array_of_indices,
       array_of_statuses);
+}
+
+int MPI_Test_cancelled(const MPI_Status *status, int *flag)
+{
+  return PMPI_Test_cancelled(status, flag);
 }
 
 int MPI_Barrier(MPI_Comm comm)

@@ -405,6 +405,13 @@ double PMPI_Wtick(void)
 #endif
 }
 
+int PMPI_Get_version(int *version, int *subversion)
+{
+  *version = MPI_VERSION;
+  *subversion = MPI_SUBVERSION;
+  return MPI_SUCCESS;
+}
+
 int PMPI_Pcontrol(const int level, ...)
 {
   return MPI_SUCCESS;
@@ -1694,6 +1701,13 @@ int PMPI_Testsome(
     MPI_Status array_of_statuses[])
 {
   fprintf(stderr, "PMPI_Testsome not implemented\n");
+  abort();
+  return MPI_SUCCESS;
+}
+
+int PMPI_Test_cancelled(const MPI_Status *status, int *flag)
+{
+  fprintf(stderr, "PMPI_Test_cancelled not implemented\n");
   abort();
   return MPI_SUCCESS;
 }

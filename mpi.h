@@ -116,6 +116,10 @@ typedef fbmpi_comm_ptr MPI_Comm;
 extern MPI_Comm MPI_COMM_SELF;
 extern MPI_Comm MPI_COMM_WORLD;
 
+struct fbmpi_win;
+typedef struct fbmpi_win* fbmpi_win_ptr;
+typedef fbmpi_win_ptr MPI_Win;
+
 struct fbmpi_group;
 typedef struct fbmpi_group* fbmpi_group_ptr;
 typedef fbmpi_group_ptr MPI_Group;
@@ -319,6 +323,8 @@ double MPI_Wtime(void);
 double PMPI_Wtime(void);
 double MPI_Wtick(void);
 double PMPI_Wtick(void);
+int MPI_Get_version(int *version, int *subversion);
+int PMPI_Get_version(int *version, int *subversion);
 
 int MPI_Pcontrol(const int level, ...);
 int PMPI_Pcontrol(const int level, ...);
@@ -1095,6 +1101,8 @@ int PMPI_Testsome(
     int* outcount,
     int array_of_indices[],
     MPI_Status array_of_statuses[]);
+int MPI_Test_cancelled(const MPI_Status *status, int *flag);
+int PMPI_Test_cancelled(const MPI_Status *status, int *flag);
 
 int MPI_Barrier(MPI_Comm comm);
 int PMPI_Barrier(MPI_Comm comm);
