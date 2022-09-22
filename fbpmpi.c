@@ -2233,3 +2233,9 @@ int PMPI_Unpack(
   return MPI_SUCCESS;
 }
 
+MPI_Info PMPI_Info_f2c(MPI_Fint info)
+{
+  fprintf(stderr, "PMPI_Info_f2c not implemented\n");
+  abort();
+  return MPI_SUCCESS;
+}
