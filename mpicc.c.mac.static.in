@@ -1,0 +1,60 @@
+#include <stdlib.h>
+#include <string.h>
+#include <stdio.h>
+#include <unistd.h>
+
+#define PREFIX "@CMAKE_INSTALL_PREFIX@"
+#define INSTALL_LIB_DIR "@CMAKE_INSTALL_LIBDIR@"
+#define COMPILER "@CMAKE_C_COMPILER@"
+
+int main(int argc, char** argv)
+{
+  char const* const const_compiler_path = COMPILER;
+  char* nonconst_compiler_path = malloc(strlen(const_compiler_path) + 1);
+  strcpy(nonconst_compiler_path, const_compiler_path);
+  int has_c_flag = 0;
+  for (int i = 1; i < argc; ++i) {
+    if (0 == strcmp(argv[i], "-c")) {
+      has_c_flag = 1;
+    }
+  }
+  int new_argc = argc;
+  char const* const prefix = PREFIX;
+  char const* const big_i = "-I";
+  char const* const include = "/include";
+  char const* const lib = "/" INSTALL_LIB_DIR;
+  char const* const little_l = "/libfbmpi.a";
+  size_t cmdline_size = strlen(big_i) + strlen(prefix) + strlen(include) + 1;
+  char* full_big_i = malloc(cmdline_size);
+  strcpy(full_big_i, big_i);
+  strcat(full_big_i, prefix);
+  strcat(full_big_i, include);
+  new_argc += 1;
+  char* full_little_l = NULL;
+  if (!has_c_flag) {
+    cmdline_size = strlen(prefix) + strlen(lib) + strlen(little_l) + 1;
+    full_little_l = malloc(cmdline_size);
+    strcpy(full_little_l, prefix);
+    strcat(full_little_l, lib);
+    strcat(full_little_l, little_l);
+    new_argc += 1;
+  }
+  char** new_argv = malloc((new_argc + 1) * sizeof(char*));  
+  new_argv[0] = nonconst_compiler_path;
+  for (int i = 1; i < argc; ++i) {
+    new_argv[i] = argv[i];
+  }
+//for (int i = 0; i < argc; ++i) {
+//  fprintf(stderr, "OLD CMDLINE: %s\n", argv[i]);
+//}
+  new_argv[argc] = full_big_i;
+  if (!has_c_flag) {
+    new_argv[argc + 1] = full_little_l;
+  }
+  new_argv[new_argc] = NULL;
+//fprintf(stderr, "COMPILER: %s\n", const_compiler_path);
+//for (int i = 0; i < new_argc; ++i) {
+//  fprintf(stderr, "CMDLINE: %s\n", new_argv[i]);
+//}
+  return execvp(const_compiler_path, new_argv);
+}
