@@ -1866,9 +1866,21 @@ int PMPI_Allgatherv(
     MPI_Datatype recvtype,
     MPI_Comm comm)
 {
-  fprintf(stderr, "PMPI_Allgatherv not implemented\n");
-  abort();
-  return MPI_SUCCESS;
+  if (sendcount != recvcounts[0]) {
+    fprintf(stderr, "PMPI_Allgatherv counts don't match!\n");
+    abort();
+  }
+  if (sendtype != recvtype) {
+    fprintf(stderr, "PMPI_Allgatherv types don't match!\n");
+    abort();
+  }
+  MPI_Count datatype_size;
+  int err = MPI_Type_size_x(sendtype, &datatype_size);
+  if (err != MPI_SUCCESS) return err;
+  return fbmpi_memcpy(
+      ((char*)recvbuf) + displs[0] * datatype_size,
+      sendbuf,
+      sendcount * datatype_size);
 }
 
 int PMPI_Gatherv(
