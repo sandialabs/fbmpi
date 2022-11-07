@@ -170,10 +170,21 @@ install(TARGETS fbmpi
   PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
   )
 
-configure_file(mpicc.c.mac.static.in "${CMAKE_CURRENT_BINARY_DIR}/mpicc.c" @ONLY)
+configure_file(mpicc-unix-static.c.in "${CMAKE_CURRENT_BINARY_DIR}/mpicc.c" @ONLY)
 add_executable(mpicc "${CMAKE_CURRENT_BINARY_DIR}/mpicc.c")
 target_link_libraries(mpicc PRIVATE fbmpi)
 install(TARGETS mpicc
+  LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+  ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+  RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+  INCLUDES DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+  PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+  )
+
+configure_file(mpicxx-unix-static.c.in "${CMAKE_CURRENT_BINARY_DIR}/mpicxx.c" @ONLY)
+add_executable(mpicxx "${CMAKE_CURRENT_BINARY_DIR}/mpicxx.c")
+target_link_libraries(mpicxx PRIVATE fbmpi)
+install(TARGETS mpicxx
   LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
   ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
   RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
