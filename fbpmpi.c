@@ -862,8 +862,7 @@ int PMPI_Cart_rank(
     const int coords[],
     int* rank)
 {
-  fprintf(stderr, "PMPI_Cart_rank not implemented\n");
-  abort();
+  *rank = 0;
   return MPI_SUCCESS;
 }
 
