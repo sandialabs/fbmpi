@@ -1033,10 +1033,6 @@ int MPI_Wait(
 int PMPI_Wait(
     MPI_Request* request,
     MPI_Status* status);
-int MPI_Test(
-    MPI_Request* request,
-    int* flag,
-    MPI_Status* status);
 int MPI_Waitall(
     int count,
     MPI_Request array_of_requests[],
